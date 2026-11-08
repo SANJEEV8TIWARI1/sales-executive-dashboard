@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Executive Sales & Revenue Dashboard</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen">
+
+  <!-- Navigation / Header -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
+          <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-white">Executive Sales Dashboard</h1>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-400">Quarterly Performance, Regional Profits & KPI Trends</p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <select id="timeFilter" class="bg-slate-800 border border-slate-700 text-slate-200 text-sm rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500">
+          <option value="2026">FY 2026 (YTD)</option>
+          <option value="2025">FY 2025</option>
+        </select>
+        <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 transition">
+          <i data-lucide="download" class="w-4 h-4"></i> Export PDF
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- KPI CARDS -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      
+      <!-- KPI 1 -->
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-5 hover:border-slate-600 transition">
+        <div class="flex justify-between items-start">
+          <p class="text-sm font-medium text-slate-400">Total Revenue</p>
+          <span class="p-2 bg-indigo-500/10 text-indigo-400 rounded-lg"><i data-lucide="dollar-sign" class="w-5 h-5"></i></span>
+        </div>
+        <div class="mt-3">
+          <h3 class="text-2xl font-bold text-white">$4.85M</h3>
+          <p class="text-xs text-emerald-400 flex items-center gap-1 mt-1 font-semibold">
+            <i data-lucide="trending-up" class="w-3.5 h-3.5"></i> +14.2% <span class="text-slate-400 font-normal">vs prev quarter</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- KPI 2 -->
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-5 hover:border-slate-600 transition">
+        <div class="flex justify-between items-start">
+          <p class="text-sm font-medium text-slate-400">Net Profit Margin</p>
+          <span class="p-2 bg-emerald-500/10 text-emerald-400 rounded-lg"><i data-lucide="pie-chart" class="w-5 h-5"></i></span>
+        </div>
+        <div class="mt-3">
+          <h3 class="text-2xl font-bold text-white">24.6%</h3>
+          <p class="text-xs text-emerald-400 flex items-center gap-1 mt-1 font-semibold">
+            <i data-lucide="trending-up" class="w-3.5 h-3.5"></i> +2.8% <span class="text-slate-400 font-normal">YoY expansion</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- KPI 3 -->
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-5 hover:border-slate-600 transition">
+        <div class="flex justify-between items-start">
+          <p class="text-sm font-medium text-slate-400">CAC (Avg. Cost)</p>
+          <span class="p-2 bg-amber-500/10 text-amber-400 rounded-lg"><i data-lucide="users" class="w-5 h-5"></i></span>
+        </div>
+        <div class="mt-3">
+          <h3 class="text-2xl font-bold text-white">$142</h3>
+          <p class="text-xs text-emerald-400 flex items-center gap-1 mt-1 font-semibold">
+            <i data-lucide="trending-down" class="w-3.5 h-3.5"></i> -5.1% <span class="text-slate-400 font-normal">acquisition efficiency</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- KPI 4 -->
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-5 hover:border-slate-600 transition">
+        <div class="flex justify-between items-start">
+          <p class="text-sm font-medium text-slate-400">Total Deals Closed</p>
+          <span class="p-2 bg-cyan-500/10 text-cyan-400 rounded-lg"><i data-lucide="shopping-bag" class="w-5 h-5"></i></span>
+        </div>
+        <div class="mt-3">
+          <h3 class="text-2xl font-bold text-white">2,418</h3>
+          <p class="text-xs text-emerald-400 flex items-center gap-1 mt-1 font-semibold">
+            <i data-lucide="trending-up" class="w-3.5 h-3.5"></i> +8.5% <span class="text-slate-400 font-normal">win rate steady</span>
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CHARTS SECTION -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- Quarterly Revenue Chart (Spans 2 columns) -->
+      <div class="lg:col-span-2 bg-slate-800/60 border border-slate-700/60 rounded-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-white">Quarterly Revenue vs Target</h2>
+            <p class="text-xs text-slate-400">Comparing actual performance with projected targets ($ in Thousands)</p>
+          </div>
+          <span class="text-xs font-medium text-indigo-400 bg-indigo-500/10 px-2.5 py-1 rounded">Interactive</span>
+        </div>
+        <div class="relative h-72">
+          <canvas id="revenueTrendChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Regional Profit Distribution -->
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-white">Regional Profit Share</h2>
+            <p class="text-xs text-slate-400">Contribution by operating territory</p>
+          </div>
+        </div>
+        <div class="relative h-72 flex items-center justify-center">
+          <canvas id="regionalPieChart"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- LOWER SECTION: CATEGORY PERFORMANCE & RECENT HIGHLIGHTS -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- Category Sales Chart -->
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-xl p-6">
+        <h2 class="text-base font-semibold text-white mb-1">Product Category Performance</h2>
+        <p class="text-xs text-slate-400 mb-4">Revenue breakdown by product lines</p>
+        <div class="relative h-64">
+          <canvas id="categoryChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Top Regional Executive Table (Spans 2 columns) -->
+      <div class="lg:col-span-2 bg-slate-800/60 border border-slate-700/60 rounded-xl p-6 overflow-hidden">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-white">Executive Regional Breakdown</h2>
+            <p class="text-xs text-slate-400">Target attainment & regional status</p>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead class="text-xs uppercase bg-slate-900/50 text-slate-400 border-b border-slate-700">
+              <tr>
+                <th class="px-4 py-3">Region</th>
+                <th class="px-4 py-3">Revenue</th>
+                <th class="px-4 py-3">Profit</th>
+                <th class="px-4 py-3">Target %</th>
+                <th class="px-4 py-3">Status</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-700/50 text-slate-300">
+              <tr>
+                <td class="px-4 py-3 font-medium text-white flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span> North America
+                </td>
+                <td class="px-4 py-3">$1,940,000</td>
+                <td class="px-4 py-3 text-emerald-400 font-semibold">$523,800</td>
+                <td class="px-4 py-3">108%</td>
+                <td class="px-4 py-3"><span class="px-2 py-0.5 rounded text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Exceeded</span></td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-medium text-white flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-cyan-500"></span> EMEA (Europe)
+                </td>
+                <td class="px-4 py-3">$1,450,000</td>
+                <td class="px-4 py-3 text-emerald-400 font-semibold">$348,000</td>
+                <td class="px-4 py-3">96%</td>
+                <td class="px-4 py-3"><span class="px-2 py-0.5 rounded text-xs bg-amber-500/10 text-amber-400 border border-amber-500/20">On Track</span></td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-medium text-white flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Asia-Pacific (APAC)
+                </td>
+                <td class="px-4 py-3">$1,020,000</td>
+                <td class="px-4 py-3 text-emerald-400 font-semibold">$244,800</td>
+                <td class="px-4 py-3">102%</td>
+                <td class="px-4 py-3"><span class="px-2 py-0.5 rounded text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Exceeded</span></td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-medium text-white flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> LATAM
+                </td>
+                <td class="px-4 py-3">$440,000</td>
+                <td class="px-4 py-3 text-emerald-400 font-semibold">$74,800</td>
+                <td class="px-4 py-3">88%</td>
+                <td class="px-4 py-3"><span class="px-2 py-0.5 rounded text-xs bg-rose-500/10 text-rose-400 border border-rose-500/20">Needs Review</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    // Chart 1: Quarterly Revenue vs Target
+    const ctxRevenue = document.getElementById('revenueTrendChart').getContext('2d');
+    new Chart(ctxRevenue, {
+      type: 'bar',
+      data: {
+        labels: ['Q1 2025', 'Q2 2025', 'Q3 2025', 'Q4 2025', 'Q1 2026', 'Q2 2026'],
+        datasets: [
+          {
+            label: 'Actual Revenue ($k)',
+            data: [720, 890, 940, 1100, 1190, 1320],
+            backgroundColor: 'rgba(99, 102, 241, 0.85)',
+            borderRadius: 6
+          },
+          {
+            label: 'Target Goal ($k)',
+            data: [700, 850, 900, 1050, 1150, 1250],
+            type: 'line',
+            borderColor: '#38bdf8',
+            borderWidth: 3,
+            tension: 0.3,
+            pointBackgroundColor: '#38bdf8',
+            fill: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: '#94a3b8' } }
+        },
+        scales: {
+          x: { grid: { color: 'rgba(148, 163, 184, 0.1)' }, ticks: { color: '#94a3b8' } },
+          y: { grid: { color: 'rgba(148, 163, 184, 0.1)' }, ticks: { color: '#94a3b8' } }
+        }
+      }
+    });
+
+    // Chart 2: Regional Profit Share
+    const ctxRegion = document.getElementById('regionalPieChart').getContext('2d');
+    new Chart(ctxRegion, {
+      type: 'doughnut',
+      data: {
+        labels: ['North America', 'EMEA', 'APAC', 'LATAM'],
+        datasets: [{
+          data: [44, 29, 21, 6],
+          backgroundColor: ['#6366f1', '#06b6d4', '#f59e0b', '#f43f5e'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { color: '#94a3b8', boxWidth: 12 } }
+        },
+        cutout: '70%'
+      }
+    });
+
+    // Chart 3: Category Performance
+    const ctxCategory = document.getElementById('categoryChart').getContext('2d');
+    new Chart(ctxCategory, {
+      type: 'bar',
+      indexAxis: 'y',
+      data: {
+        labels: ['Cloud Enterprise', 'SaaS Licenses', 'Consulting', 'Support Contracts'],
+        datasets: [{
+          label: 'Revenue ($k)',
+          data: [1850, 1420, 860, 720],
+          backgroundColor: 'rgba(56, 189, 248, 0.75)',
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: 'rgba(148, 163, 184, 0.1)' }, ticks: { color: '#94a3b8' } },
+          y: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
